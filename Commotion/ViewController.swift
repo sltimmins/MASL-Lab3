@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     let activityManager = CMMotionActivityManager()
     let pedometer = CMPedometer()
     let motion = CMMotionManager()
+    let calendar = Calendar.current
+    let today = Date()
     var totalSteps: Float = 0.0 {
         willSet(newtotalSteps){
             DispatchQueue.main.async{
@@ -28,6 +30,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var stepsSlider: UISlider!
     @IBOutlet weak var stepsLabel: UILabel!
     @IBOutlet weak var isWalking: UILabel!
+    @IBOutlet weak var yesterdaySteps: UILabel!
     
     
     //MARK: =====View Lifecycle=====
@@ -38,8 +41,21 @@ class ViewController: UIViewController {
         self.startActivityMonitoring()
         self.startPedometerMonitoring()
         self.startMotionUpdates()
+        dates()
     }
-    
+    func dates(){
+        let midnight = calendar.startOfDay(for: today)
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: midnight)
+        print(yesterday)
+        print(midnight)
+        pedometer.queryPedometerData(from: yesterday!, to: midnight){
+            (data, error) in print(data?.numberOfSteps.stringValue)
+        }
+        pedometer.queryPedometerData(from: midnight, to: Date()){
+            (data, error) in print(data?.numberOfSteps)
+        }
+        
+    }
     
     // MARK: =====Raw Motion Functions=====
     func startMotionUpdates(){
