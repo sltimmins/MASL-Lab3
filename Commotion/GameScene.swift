@@ -109,12 +109,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     func addSpriteBottle(){
-        let spriteA = SKSpriteNode(imageNamed: "sprite") // this is literally a sprite bottle... 😎
+        let spriteA = SKSpriteNode(imageNamed: "larson") // this is literally Dr. Larson
         
-        spriteA.size = CGSize(width:size.width*0.15,height:size.height * 0.08)
+        spriteA.size = CGSize(width:size.width*0.1,height:size.height * 0.06)
         
         let randNumber = random(min: CGFloat(0.1), max: CGFloat(0.9))
-        spriteA.position = CGPoint(x: size.width * randNumber, y: size.height * 0.75)
+        spriteA.position = CGPoint(x: size.width / 2, y: size.height * 0.9)
         
         spriteA.physicsBody = SKPhysicsBody(rectangleOf:spriteA.size)
         spriteA.physicsBody?.restitution = random(min: CGFloat(1.0), max: CGFloat(1.5))
