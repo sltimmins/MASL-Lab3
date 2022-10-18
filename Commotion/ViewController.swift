@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         self.startMotionUpdates()
 //        self.dates()
         
-        Timer.scheduledTimer(timeInterval: 1.0, target: self,
+        Timer.scheduledTimer(timeInterval: 0.05, target: self,
             selector: #selector(self.dates),
             userInfo: nil,
             repeats: true)
@@ -107,6 +107,7 @@ class ViewController: UIViewController {
         if let unwrappedActivity = activity {
             DispatchQueue.main.async{
                 self.isWalking.text = "Walking: \(unwrappedActivity.walking)\n Still: \(unwrappedActivity.stationary)"
+                let test = unwrappedActivity.
             }
         }
     }
