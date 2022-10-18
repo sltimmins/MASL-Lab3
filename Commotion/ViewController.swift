@@ -26,6 +26,9 @@ class ViewController: UIViewController {
         }
     }
     
+    var stepsToday: UInt = 0
+    var stepsYesterday: UInt = 0
+    
     //MARK: =====UI Elements=====
     @IBOutlet weak var stepsSlider: UISlider!
     @IBOutlet weak var stepsLabel: UILabel!
@@ -41,20 +44,32 @@ class ViewController: UIViewController {
         self.startActivityMonitoring()
         self.startPedometerMonitoring()
         self.startMotionUpdates()
-        dates()
+        
+        Timer.scheduledTimer(timeInterval: 0.05, target: self,
+            selector: #selector(self.dates),
+            userInfo: nil,
+            repeats: true)
+        
+//        let steps = dates()
+//        print(steps)
+//        self.yesterdaySteps.text = steps.0
+//        self.stepsLabel.text = steps.1
     }
+    
+    @objc
     func dates(){
         let midnight = calendar.startOfDay(for: today)
         let yesterday = calendar.date(byAdding: .day, value: -1, to: midnight)
-        print(yesterday)
-        print(midnight)
+        
         pedometer.queryPedometerData(from: yesterday!, to: midnight){
-            (data, error) in print(data?.numberOfSteps.stringValue)
+            (data, error) in self.stepsYesterday = (data?.numberOfSteps.uintValue)!
         }
         pedometer.queryPedometerData(from: midnight, to: Date()){
-            (data, error) in print(data?.numberOfSteps)
+            (data, error) in self.stepsToday = (data?.numberOfSteps.uintValue)!
         }
         
+        self.yesterdaySteps.text = String(self.stepsYesterday)
+        self.stepsLabel.text = String(self.stepsToday)
     }
     
     // MARK: =====Raw Motion Functions=====

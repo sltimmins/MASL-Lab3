@@ -56,9 +56,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="uAs-2Q-GOu" kind="popoverPresentation" popoverAnchorView="RkA-hX-uhD" id="97D-qp-4gv">
-                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                            </segue>
+                                            <segue destination="uAs-2Q-GOu" kind="show" id="97D-qp-4gv"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
