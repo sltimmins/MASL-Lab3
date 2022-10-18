@@ -88,7 +88,7 @@ class ViewController: UIViewController {
     func handleMotion(_ motionData:CMDeviceMotion?, error:Error?){
         if let gravity = motionData?.gravity {
             let rotation = atan2(gravity.x, gravity.y) - Double.pi
-            self.isWalking.transform = CGAffineTransform(rotationAngle: CGFloat(rotation))
+//            self.isWalking.transform = CGAffineTransform(rotationAngle: CGFloat(rotation))
         }
     }
     
@@ -106,8 +106,19 @@ class ViewController: UIViewController {
         // unwrap the activity and disp
         if let unwrappedActivity = activity {
             DispatchQueue.main.async{
-                self.isWalking.text = "Walking: \(unwrappedActivity.walking)\n Still: \(unwrappedActivity.stationary)"
-                let test = unwrappedActivity.
+                if(unwrappedActivity.unknown) {
+                    self.isWalking.text = "Unknown"
+                } else if(unwrappedActivity.stationary) {
+                    self.isWalking.text = "Stationary"
+                } else if(unwrappedActivity.walking) {
+                    self.isWalking.text = "Walking"
+                } else if(unwrappedActivity.running) {
+                    self.isWalking.text = "Running"
+                } else if(unwrappedActivity.cycling) {
+                    self.isWalking.text = "Cycling"
+                } else if(unwrappedActivity.automotive) {
+                    self.isWalking.text = "Driving"
+                }
             }
         }
     }
