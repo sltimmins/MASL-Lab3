@@ -28,13 +28,14 @@ class ViewController: UIViewController {
     
     var stepsToday: Int = 0
     var stepsYesterday: Int = 0
+    var goal = 5000.0
     
     //MARK: =====UI Elements=====
     @IBOutlet weak var stepsSlider: UISlider!
     @IBOutlet weak var stepsLabel: UILabel!
     @IBOutlet weak var isWalking: UILabel!
     @IBOutlet weak var yesterdaySteps: UILabel!
-    
+    @IBOutlet weak var CircularProgress: CircularProgressView!
     
     //MARK: =====View Lifecycle=====
     override func viewDidLoad() {
@@ -72,6 +73,9 @@ class ViewController: UIViewController {
         
         self.yesterdaySteps.text = String(self.stepsYesterday)
         self.stepsLabel.text = String(self.stepsToday)
+        
+        CircularProgress.setprogress(0.4, UIColor.blue, String(stepsToday), "Steps")
+        CircularProgress.animate(Double(stepsToday) / goal, duration: 2)
     }
     
     // MARK: =====Raw Motion Functions=====
