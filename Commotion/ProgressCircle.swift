@@ -31,7 +31,7 @@ class CircularProgressView: UIView {
     ///0.0 - 1.0
     var progress: Double = 0.5
     /// circle radius
-    var radius: Int = 60
+    var radius: Int = 110
     
     override init(frame: CGRect) {
           super.init(frame: frame)

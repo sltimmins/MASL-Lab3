@@ -25,44 +25,59 @@ class ViewController: UIViewController {
             }
         }
     }
-    
+    let defaults = UserDefaults.standard
     var stepsToday: Int = 0
     var stepsYesterday: Int = 0
-    var goal = 5000.0
+    var goal = 0.0
     
     //MARK: =====UI Elements=====
     @IBOutlet weak var stepsSlider: UISlider!
-    @IBOutlet weak var stepsLabel: UILabel!
     @IBOutlet weak var isWalking: UILabel!
     @IBOutlet weak var yesterdaySteps: UILabel!
+    @IBOutlet weak var stepsLabel: UILabel!
+    @IBOutlet weak var stepGoal: UILabel!
     @IBOutlet weak var CircularProgress: CircularProgressView!
+    @IBOutlet weak var activitySymbol: UIImageView!
+    @IBOutlet weak var playGame: UIButton!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let _ = self.defaults.object(forKey: "goal") {
+            self.goal = self.defaults.double(forKey: "goal")
+        } else {
+            self.defaults.set(5000.0, forKey: "goal")
+            self.goal = 5000.0
+        }
+        
+        self.playGame.isHidden = true
+        self.stepGoal.text = String("Step Goal: " + String(Int(self.goal)))
+        self.stepsSlider.value = Float(self.goal)
+        dates()
+    }
     
     //MARK: =====View Lifecycle=====
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.totalSteps = 0.0
         self.startActivityMonitoring()
         self.startPedometerMonitoring()
         self.startMotionUpdates()
-//        self.dates()
         
         Timer.scheduledTimer(timeInterval: 0.05, target: self,
             selector: #selector(self.dates),
             userInfo: nil,
             repeats: true)
-        
-//        let steps = dates()
-//        print(steps)
-//        self.yesterdaySteps.text = steps.0
-//        self.stepsLabel.text = steps.1
+    }
+    
+    @IBAction func sliderValueChanged(_ sender: UISlider) {
+        self.stepGoal.text = String("Step Goal: " + String(Int(sender.value)))
+        self.goal = Double(sender.value)
+        self.defaults.set(Double(sender.value), forKey: "goal")
     }
     
     @objc
     func dates(){
         let midnight = calendar.startOfDay(for: Date())
         let yesterday = calendar.date(byAdding: .day, value: -1, to: midnight)
-        print(Date())
         
         pedometer.queryPedometerData(from: yesterday!, to: midnight){
             (data, error) in self.stepsYesterday = (data?.numberOfSteps.intValue)!
@@ -72,10 +87,21 @@ class ViewController: UIViewController {
         }
         
         self.yesterdaySteps.text = String(self.stepsYesterday)
-        self.stepsLabel.text = String(self.stepsToday)
+        self.stepsLabel.text = "Current Steps: " + String(self.stepsToday)
         
-        CircularProgress.setprogress(0.4, UIColor.blue, String(stepsToday), "Steps")
-        CircularProgress.animate(Double(stepsToday) / goal, duration: 2)
+        var remaining = Int(goal) - stepsToday
+        if(remaining < 0) {
+            remaining = 0
+        }
+        
+        CircularProgress.setprogress(Double(stepsToday) / goal, UIColor.systemBlue, String(remaining), "Steps Remaining")
+        
+        if(Double(stepsToday) >= self.goal) {
+            self.playGame.isHidden = false
+        } else {
+            self.playGame.isHidden = true
+        }
+//        CircularProgress.animate(0.9, duration: 2)
     }
     
     // MARK: =====Raw Motion Functions=====
@@ -111,17 +137,17 @@ class ViewController: UIViewController {
         if let unwrappedActivity = activity {
             DispatchQueue.main.async{
                 if(unwrappedActivity.unknown) {
-                    self.isWalking.text = "Unknown"
+                    self.activitySymbol.image = UIImage(systemName: "questionmark")
                 } else if(unwrappedActivity.stationary) {
-                    self.isWalking.text = "Stationary"
+                    self.activitySymbol.image = UIImage(systemName: "figure.stand")
                 } else if(unwrappedActivity.walking) {
-                    self.isWalking.text = "Walking"
+                    self.activitySymbol.image = UIImage(systemName: "figure.walk")
                 } else if(unwrappedActivity.running) {
-                    self.isWalking.text = "Running"
+                    self.activitySymbol.image = UIImage(systemName: "figure.run")
                 } else if(unwrappedActivity.cycling) {
-                    self.isWalking.text = "Cycling"
+                    self.activitySymbol.image = UIImage(systemName: "figure.outdoor.cycle")
                 } else if(unwrappedActivity.automotive) {
-                    self.isWalking.text = "Driving"
+                    self.activitySymbol.image = UIImage(systemName: "car.fill")
                 }
             }
         }
