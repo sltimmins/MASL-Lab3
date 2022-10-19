@@ -32,7 +32,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // MARK: View Hierarchy Functions
-//    let spinBlock = SKSpriteNode()
+    
+    // FOR GOAL BOX
+    let doubleBox = SKSpriteNode()
+    let halfBox = SKSpriteNode()
+    
     let scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
     var score:Int = 0 {
         willSet(newValue){
@@ -87,13 +91,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         // add a spinning block
-//        self.addBlockAtPoint(CGPoint(x: size.width * 0.5, y: size.height * 0.35))
+        self.addBlockAtPoint(CGPoint(x: size.width * 0.2, y: size.height * 0.1), doubleBox)
+        self.addBlockAtPoint(CGPoint(x: size.width * 0.8, y: size.height * 0.1), halfBox)
         
         self.addSpriteBottle()
         
         self.addScore()
         
-        self.score = 0
+        self.score = 2
     }
     
     // MARK: Create Sprites Functions
@@ -102,7 +107,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.text = "Score: 0"
         scoreLabel.fontSize = 20
         scoreLabel.fontColor = SKColor.blue
-        scoreLabel.position = CGPoint(x: frame.midX, y: frame.minY)
+        scoreLabel.position = CGPoint(x: frame.midX, y: frame.midY)
         
         addChild(scoreLabel)
     }
@@ -126,22 +131,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(spriteA)
     }
     
-//    func addBlockAtPoint(_ point:CGPoint){
-//
-//        spinBlock.color = UIColor.red
-//        spinBlock.size = CGSize(width:size.width*0.15,height:size.height * 0.05)
-//        spinBlock.position = point
-//
-//        spinBlock.physicsBody = SKPhysicsBody(rectangleOf:spinBlock.size)
-//        spinBlock.physicsBody?.contactTestBitMask = 0x00000001
-//        spinBlock.physicsBody?.collisionBitMask = 0x00000001
-//        spinBlock.physicsBody?.categoryBitMask = 0x00000001
-//        spinBlock.physicsBody?.isDynamic = true
-//        spinBlock.physicsBody?.pinned = true
-//
-//        self.addChild(spinBlock)
-//
-//    }
+    func addBlockAtPoint(_ point:CGPoint, _ node:SKSpriteNode){
+
+        node.color = UIColor.yellow
+        node.size = CGSize(width:size.width*0.15,height:size.height * 0.05)
+        node.position = point
+
+        node.physicsBody = SKPhysicsBody(rectangleOf:node.size)
+        node.physicsBody?.contactTestBitMask = 0x00000001
+        node.physicsBody?.collisionBitMask = 0x00000001
+        node.physicsBody?.categoryBitMask = 0x00000001
+        node.physicsBody?.isDynamic = true
+        node.physicsBody?.pinned = true
+
+        self.addChild(node)
+
+    }
     
     func addStaticBlockAtPoint(_ point:CGPoint){
         let 🔲 = SKSpriteNode()
@@ -205,9 +210,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-//        if contact.bodyA.node == spinBlock || contact.bodyB.node == spinBlock {
-//            self.score += 1
-//        }
+        if contact.bodyA.node == doubleBox || contact.bodyB.node == doubleBox {
+            self.score *= 2
+        }
+        if contact.bodyA.node == halfBox || contact.bodyB.node == halfBox {
+            self.score /= 2
+        }
     }
     
     // MARK: Utility Functions (thanks ray wenderlich!)
