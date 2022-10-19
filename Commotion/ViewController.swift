@@ -88,6 +88,7 @@ class ViewController: UIViewController {
         
         self.yesterdaySteps.text = String(self.stepsYesterday)
         self.stepsLabel.text = "Current Steps: " + String(self.stepsToday)
+        self.defaults.set(self.stepsToday, forKey: "steps")
         
         var remaining = Int(goal) - stepsToday
         if(remaining < 0) {
