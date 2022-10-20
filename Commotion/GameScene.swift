@@ -12,7 +12,7 @@ import CoreMotion
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
-    //@IBOutlet weak var scoreLabel: UILabel!
+    let defaults = UserDefaults.standard
     
     // MARK: Raw Motion Functions
     let motion = CMMotionManager()
@@ -36,6 +36,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // FOR GOAL BOX
     let doubleBox = SKSpriteNode()
     let halfBox = SKSpriteNode()
+    let tripleBox = SKSpriteNode()
+    let divThreeBox = SKSpriteNode()
+    let ptOneBox = SKSpriteNode()
     
     let scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
     var score:Int = 0 {
@@ -57,14 +60,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addSidesAndTop()
         
         // add some stationary modelos
-        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.1, y: size.height * 0.85))
-        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.366, y: size.height * 0.85))
-        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.633, y: size.height * 0.85))
-        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.9, y: size.height * 0.85))
-        
-        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.233, y: size.height * 0.75))
-        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.5, y: size.height * 0.75))
-        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.766, y: size.height * 0.75))
+//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.1, y: size.height * 0.85))
+//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.366, y: size.height * 0.85))
+//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.633, y: size.height * 0.85))
+//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.9, y: size.height * 0.85))
+//
+//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.233, y: size.height * 0.75))
+//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.5, y: size.height * 0.75))
+//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.766, y: size.height * 0.75))
 
         self.addStaticPegAtPoint(CGPoint(x: size.width * 0.1, y: size.height * 0.65))
         self.addStaticPegAtPoint(CGPoint(x: size.width * 0.366, y: size.height * 0.65))
@@ -89,16 +92,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addStaticPegAtPoint(CGPoint(x: size.width * 0.633, y: size.height * 0.25))
         self.addStaticPegAtPoint(CGPoint(x: size.width * 0.9, y: size.height * 0.25))
         
+        // add THE SCORING BLOCKS
+        self.addBlockAtPoint(CGPoint(x: size.width * 0.1, y: size.height * 0.1), doubleBox)
+        self.addBlockAtPoint(CGPoint(x: size.width * 0.3, y: size.height * 0.1), divThreeBox)
+        self.addBlockAtPoint(CGPoint(x: size.width * 0.5, y: size.height * 0.1), ptOneBox)
+        self.addBlockAtPoint(CGPoint(x: size.width * 0.7, y: size.height * 0.1), halfBox)
+        self.addBlockAtPoint(CGPoint(x: size.width * 0.9, y: size.height * 0.1), tripleBox)
         
-        // add a spinning block
-        self.addBlockAtPoint(CGPoint(x: size.width * 0.2, y: size.height * 0.1), doubleBox)
-        self.addBlockAtPoint(CGPoint(x: size.width * 0.8, y: size.height * 0.1), halfBox)
-        
-        self.addSpriteBottle()
+        //self.addSpriteBottle()
         
         self.addScore()
         
-        self.score = 2
+        //SET SCORE TO STEPS
+        self.score = 0
+    }
+    
+    func updateScene(_ wager:Int){
+        self.score += wager
+        self.addSpriteBottle()
     }
     
     // MARK: Create Sprites Functions
@@ -131,10 +142,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(spriteA)
     }
     
+    // FOR MULTIPLIERS
     func addBlockAtPoint(_ point:CGPoint, _ node:SKSpriteNode){
-
         node.color = UIColor.yellow
-        node.size = CGSize(width:size.width*0.15,height:size.height * 0.05)
+        node.size = CGSize(width:size.width*0.05,height:size.height * 0.01)
         node.position = point
 
         node.physicsBody = SKPhysicsBody(rectangleOf:node.size)
@@ -205,16 +216,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // MARK: =====Delegate Functions=====
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.addSpriteBottle()
-    }
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        self.addSpriteBottle()
+//    }
     
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node == doubleBox || contact.bodyB.node == doubleBox {
             self.score *= 2
         }
+        if contact.bodyA.node == divThreeBox || contact.bodyB.node == divThreeBox {
+            self.score /= 3
+        }
+        if contact.bodyA.node == ptOneBox || contact.bodyB.node == ptOneBox {
+            self.score /= 10
+        }
         if contact.bodyA.node == halfBox || contact.bodyB.node == halfBox {
             self.score /= 2
+        }
+        if contact.bodyA.node == tripleBox || contact.bodyB.node == tripleBox {
+            self.score *= 3
         }
     }
     
