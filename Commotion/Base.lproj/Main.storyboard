@@ -171,6 +171,7 @@
                                 <rect key="frame" x="156" y="149" width="81" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="81" id="KA2-5W-p5J"/>
+                                    <constraint firstAttribute="width" secondItem="3ak-n2-iBV" secondAttribute="height" multiplier="81:32" id="hWg-Jm-nOM"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Button"/>
