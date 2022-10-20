@@ -28,8 +28,8 @@ class GameViewController: UIViewController, GameViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //setting up important starting values
         currSteps = self.defaults.integer(forKey: "steps")
-        
         wagerSlider.value = 0
         wagerSlider.maximumValue = Float(currSteps)
         wagerSlider.minimumValue = 0
@@ -56,7 +56,7 @@ class GameViewController: UIViewController, GameViewControllerDelegate {
         scene.gameVCDelegate = self
     }
 
-        
+    //changing the slider value if possible
     @IBAction func sliderMove(_ sender: Any) {
         wager = Int(wagerSlider.value)
         wagerLabel.text = "I want to wager " + String(Int(wagerSlider.value)) + " steps!"
@@ -65,7 +65,7 @@ class GameViewController: UIViewController, GameViewControllerDelegate {
             wagerButton.setTitle("Free Drop!", for: .normal)
         }
     }
-    
+    //actions for pressing the wager button and starting a drop
     @IBAction func wagerButtonPress(_ sender: Any) {
         currSteps -= wager;
         stepsLabel.text = "You have " + String(currSteps) + " steps to wager!";
@@ -83,8 +83,8 @@ class GameViewController: UIViewController, GameViewControllerDelegate {
     override var prefersStatusBarHidden : Bool {
         return true
     }
+    //adding the shared button
     func setShareButtonHidden(hidden: Bool){
-        print("in this bitch")
         self.wagerButton.isHidden = hidden
     }
 }

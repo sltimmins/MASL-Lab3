@@ -17,7 +17,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let motion = CMMotionManager()
     func startMotionUpdates(){
         // some internal inconsistency here: we need to ask the device manager for device
-        
         if self.motion.isDeviceMotionAvailable{
             self.motion.deviceMotionUpdateInterval = 0.1
             self.motion.startDeviceMotionUpdates(to: OperationQueue.main, withHandler: self.handleMotion )
@@ -40,6 +39,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
     
+    //used for collision scoring
     let doubleBoxLabel = SKLabelNode(fontNamed: "Chalkduster")
     let halfBoxLabel = SKLabelNode(fontNamed: "Chalkduster")
     let tripleBoxLabel = SKLabelNode(fontNamed: "Chalkduster")
@@ -52,6 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
+    //to show and unshow button
     var gameVCDelegate: GameViewControllerDelegate?
     var wager:Int = 0
     
@@ -65,6 +66,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // make sides to the screen
         self.addSidesAndTop()
         
+        //adding all the modelos
         self.addStaticPegAtPoint(CGPoint(x: size.width * 0.1, y: size.height * 0.65))
         self.addStaticPegAtPoint(CGPoint(x: size.width * 0.366, y: size.height * 0.65))
         self.addStaticPegAtPoint(CGPoint(x: size.width * 0.633, y: size.height * 0.65))
@@ -92,6 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addStaticShootAtPoint(CGPoint(x: size.width * 0.25, y: size.height * 0.05))
         self.addStaticShootAtPoint(CGPoint(x: size.width * 0.5, y: size.height * 0.05))
         self.addStaticShootAtPoint(CGPoint(x: size.width * 0.75, y: size.height * 0.05))
+        
         // add THE SCORING BLOCKS
         self.addScoringBlockAtPoint(CGPoint(x: size.width * 0.125, y: size.height * 0.01), doubleBox)
         self.addScoringBlockAtPoint(CGPoint(x: size.width * 0.375, y: size.height * 0.01), divThreeBox)
@@ -104,7 +107,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //SET SCORE TO STEPS
         self.score = 0
-                
+        
+        //adding scoring identifiers
         doubleBoxLabel.text = "x2"
         doubleBoxLabel.fontSize = 20
         doubleBoxLabel.fontColor = SKColor.blue
@@ -131,9 +135,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(tripleBoxLabel)
     }
     
+    //change wager amount and drop the token for it
     func updateScene(_ wager:Int){
         self.wager = wager
-        self.addSpriteBottle()
+        self.addToken()
     }
     
     // MARK: Create Sprites Functions
@@ -147,8 +152,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(scoreLabel)
     }
     
-    
-    func addSpriteBottle(){
+    //adding the plinko token (face)
+    func addToken(){
         let spriteA = SKSpriteNode(imageNamed: "larson") // this is literally Dr. Larson
         
         spriteA.size = CGSize(width:size.width*0.1,height:size.height * 0.06)
@@ -184,6 +189,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     }
     
+    //adding shoots for scoring
     func addStaticShootAtPoint(_ point:CGPoint){
         let shoot = SKSpriteNode()
         
@@ -200,10 +206,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    //adding modelo plinko pegs
     func addStaticPegAtPoint(_ point:CGPoint){
         let modelo = SKSpriteNode(imageNamed: "modelo")
         
-//        modelo.color = UIColor.init(red: 210/255, green: 180/255, blue: 140/255, alpha: 1)
         modelo.size = CGSize(width:size.width*0.07,height:size.height * 0.035)
         modelo.position = point
         
@@ -216,6 +222,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    //adding the side and top constraints
     func addSidesAndTop(){
         let left = SKSpriteNode()
         let right = SKSpriteNode()
@@ -245,6 +252,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        self.addSpriteBottle()
 //    }
     
+    //do the scoring handling
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node == doubleBox || contact.bodyB.node == doubleBox {
             self.score += wager * 2
@@ -254,14 +262,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.node == divThreeBox || contact.bodyB.node == divThreeBox {
             self.score += wager / 3
             contact.bodyB.node?.removeFromParent()
+            self.gameVCDelegate?.setShareButtonHidden(hidden: false)
         }
         if contact.bodyA.node == halfBox || contact.bodyB.node == halfBox {
             self.score += wager / 2
             contact.bodyB.node?.removeFromParent()
+            self.gameVCDelegate?.setShareButtonHidden(hidden: false)
         }
         if contact.bodyA.node == tripleBox || contact.bodyB.node == tripleBox {
             self.score += wager * 3
             contact.bodyB.node?.removeFromParent()
+            self.gameVCDelegate?.setShareButtonHidden(hidden: false)
         }
     }
     
