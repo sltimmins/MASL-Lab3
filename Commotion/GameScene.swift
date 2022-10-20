@@ -92,12 +92,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addStaticPegAtPoint(CGPoint(x: size.width * 0.633, y: size.height * 0.25))
         self.addStaticPegAtPoint(CGPoint(x: size.width * 0.9, y: size.height * 0.25))
         
+        //add the scoring shoots
+        self.addStaticShootAtPoint(CGPoint(x: size.width * 0.25, y: size.height * 0.05))
+        self.addStaticShootAtPoint(CGPoint(x: size.width * 0.5, y: size.height * 0.05))
+        self.addStaticShootAtPoint(CGPoint(x: size.width * 0.75, y: size.height * 0.05))
         // add THE SCORING BLOCKS
-        self.addBlockAtPoint(CGPoint(x: size.width * 0.1, y: size.height * 0.1), doubleBox)
-        self.addBlockAtPoint(CGPoint(x: size.width * 0.3, y: size.height * 0.1), divThreeBox)
-        self.addBlockAtPoint(CGPoint(x: size.width * 0.5, y: size.height * 0.1), ptOneBox)
-        self.addBlockAtPoint(CGPoint(x: size.width * 0.7, y: size.height * 0.1), halfBox)
-        self.addBlockAtPoint(CGPoint(x: size.width * 0.9, y: size.height * 0.1), tripleBox)
+        self.addScoringBlockAtPoint(CGPoint(x: size.width * 0.125, y: size.height * 0.01), doubleBox)
+        
+//        self.addBlockAtPoint(CGPoint(x: size.width * 0.25, y: size.height * 0.05), doubleBox)
+//        self.addBlockAtPoint(CGPoint(x: size.width * 0.5, y: size.height * 0.1), divThreeBox)
+//        self.addBlockAtPoint(CGPoint(x: size.width * 0.5, y: size.height * 0.1), ptOneBox)
+//        self.addBlockAtPoint(CGPoint(x: size.width * 0.75, y: size.height * 0.1), halfBox)
+//        self.addBlockAtPoint(CGPoint(x: size.width * 0.9, y: size.height * 0.1), tripleBox)
         
         //self.addSpriteBottle()
         
@@ -143,9 +149,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // FOR MULTIPLIERS
-    func addBlockAtPoint(_ point:CGPoint, _ node:SKSpriteNode){
-        node.color = UIColor.yellow
-        node.size = CGSize(width:size.width*0.05,height:size.height * 0.01)
+    func addScoringBlockAtPoint(_ point:CGPoint, _ node:SKSpriteNode){
+        node.color = UIColor.blue
+        node.size = CGSize(width:size.width*0.1,height:size.height * 0.01)
         node.position = point
 
         node.physicsBody = SKPhysicsBody(rectangleOf:node.size)
@@ -154,24 +160,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody?.categoryBitMask = 0x00000001
         node.physicsBody?.isDynamic = true
         node.physicsBody?.pinned = true
+        node.physicsBody?.allowsRotation = false
 
         self.addChild(node)
 
     }
     
-    func addStaticBlockAtPoint(_ point:CGPoint){
-        let 🔲 = SKSpriteNode()
+    func addStaticShootAtPoint(_ point:CGPoint){
+        let shoot = SKSpriteNode()
         
-        🔲.color = UIColor.red
-        🔲.size = CGSize(width:size.width*0.1,height:size.height * 0.05)
-        🔲.position = point
+        shoot.color = UIColor.init(red: 210/255, green: 180/255, blue: 140/255, alpha: 1)
+        shoot.size = CGSize(width:size.width*0.01,height:size.height * 0.1)
+        shoot.position = point
         
-        🔲.physicsBody = SKPhysicsBody(rectangleOf:🔲.size)
-        🔲.physicsBody?.isDynamic = true
-        🔲.physicsBody?.pinned = true
-        🔲.physicsBody?.allowsRotation = true
+        shoot.physicsBody = SKPhysicsBody(rectangleOf:shoot.size)
+        shoot.physicsBody?.isDynamic = true
+        shoot.physicsBody?.pinned = true
+        shoot.physicsBody?.allowsRotation = false
         
-        self.addChild(🔲)
+        self.addChild(shoot)
         
     }
     
