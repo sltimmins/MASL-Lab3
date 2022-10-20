@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func handleMotion(_ motionData:CMDeviceMotion?, error:Error?){
         if let gravity = motionData?.gravity {
-            self.physicsWorld.gravity = CGVector(dx: CGFloat(9.8*gravity.x), dy: abs(CGFloat(9.8*gravity.y)))
+            self.physicsWorld.gravity = CGVector(dx: CGFloat(9.8*gravity.x), dy: -abs(CGFloat(9.8*gravity.y)))
         }
     }
     
@@ -137,7 +137,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // FOR MULTIPLIERS
     func addScoringBlockAtPoint(_ point:CGPoint, _ node:SKSpriteNode){
-        node.color = UIColor.blue
+        node.color = UIColor.white
         node.size = CGSize(width:size.width*0.1,height:size.height * 0.01)
         node.position = point
 
@@ -217,18 +217,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node == doubleBox || contact.bodyB.node == doubleBox {
             self.score *= 2
+            contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node == divThreeBox || contact.bodyB.node == divThreeBox {
             self.score /= 3
-        }
-        if contact.bodyA.node == ptOneBox || contact.bodyB.node == ptOneBox {
-            self.score /= 10
+            contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node == halfBox || contact.bodyB.node == halfBox {
             self.score /= 2
+            contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node == tripleBox || contact.bodyB.node == tripleBox {
             self.score *= 3
+            contact.bodyB.node?.removeFromParent()
         }
     }
     
