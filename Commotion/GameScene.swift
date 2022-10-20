@@ -59,16 +59,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // make sides to the screen
         self.addSidesAndTop()
         
-        // add some stationary modelos
-//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.1, y: size.height * 0.85))
-//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.366, y: size.height * 0.85))
-//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.633, y: size.height * 0.85))
-//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.9, y: size.height * 0.85))
-//
-//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.233, y: size.height * 0.75))
-//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.5, y: size.height * 0.75))
-//        self.addStaticPegAtPoint(CGPoint(x: size.width * 0.766, y: size.height * 0.75))
-
         self.addStaticPegAtPoint(CGPoint(x: size.width * 0.1, y: size.height * 0.65))
         self.addStaticPegAtPoint(CGPoint(x: size.width * 0.366, y: size.height * 0.65))
         self.addStaticPegAtPoint(CGPoint(x: size.width * 0.633, y: size.height * 0.65))
@@ -98,12 +88,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addStaticShootAtPoint(CGPoint(x: size.width * 0.75, y: size.height * 0.05))
         // add THE SCORING BLOCKS
         self.addScoringBlockAtPoint(CGPoint(x: size.width * 0.125, y: size.height * 0.01), doubleBox)
-        
-//        self.addBlockAtPoint(CGPoint(x: size.width * 0.25, y: size.height * 0.05), doubleBox)
-//        self.addBlockAtPoint(CGPoint(x: size.width * 0.5, y: size.height * 0.1), divThreeBox)
-//        self.addBlockAtPoint(CGPoint(x: size.width * 0.5, y: size.height * 0.1), ptOneBox)
-//        self.addBlockAtPoint(CGPoint(x: size.width * 0.75, y: size.height * 0.1), halfBox)
-//        self.addBlockAtPoint(CGPoint(x: size.width * 0.9, y: size.height * 0.1), tripleBox)
+        self.addScoringBlockAtPoint(CGPoint(x: size.width * 0.375, y: size.height * 0.01), divThreeBox)
+        self.addScoringBlockAtPoint(CGPoint(x: size.width * 0.625, y: size.height * 0.01), halfBox)
+        self.addScoringBlockAtPoint(CGPoint(x: size.width * 0.875, y: size.height * 0.01), tripleBox)
         
         //self.addSpriteBottle()
         
