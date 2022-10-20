@@ -66,6 +66,7 @@ class GameViewController: UIViewController {
         wagerLabel.text = "I want to wager " + String(Int(wagerSlider.value)) + " steps!"
         
         scene.updateScene(wager)
+        wager = 0
     }
     
     override var prefersStatusBarHidden : Bool {

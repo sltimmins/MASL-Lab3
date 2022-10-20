@@ -53,6 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
+    var wager:Int = 0
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -94,8 +95,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // add THE SCORING BLOCKS
         self.addScoringBlockAtPoint(CGPoint(x: size.width * 0.125, y: size.height * 0.01), doubleBox)
         self.addScoringBlockAtPoint(CGPoint(x: size.width * 0.375, y: size.height * 0.01), divThreeBox)
-        self.addScoringBlockAtPoint(CGPoint(x: size.width * 0.625, y: size.height * 0.01), halfBox)
-        self.addScoringBlockAtPoint(CGPoint(x: size.width * 0.875, y: size.height * 0.01), tripleBox)
+        self.addScoringBlockAtPoint(CGPoint(x: size.width * 0.625, y: size.height * 0.01), tripleBox)
+        self.addScoringBlockAtPoint(CGPoint(x: size.width * 0.875, y: size.height * 0.01), halfBox)
         
         //self.addSpriteBottle()
         
@@ -131,7 +132,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func updateScene(_ wager:Int){
-        self.score += wager
+        self.wager = wager
         self.addSpriteBottle()
     }
     
@@ -246,19 +247,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node == doubleBox || contact.bodyB.node == doubleBox {
-            self.score *= 2
+            self.score += wager * 2
             contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node == divThreeBox || contact.bodyB.node == divThreeBox {
-            self.score /= 3
+            self.score += wager / 3
             contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node == halfBox || contact.bodyB.node == halfBox {
-            self.score /= 2
+            self.score += wager / 2
             contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node == tripleBox || contact.bodyB.node == tripleBox {
-            self.score *= 3
+            self.score += wager * 3
             contact.bodyB.node?.removeFromParent()
         }
     }
