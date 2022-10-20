@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func handleMotion(_ motionData:CMDeviceMotion?, error:Error?){
         if let gravity = motionData?.gravity {
-            self.physicsWorld.gravity = CGVector(dx: CGFloat(9.8*gravity.x), dy: CGFloat(9.8*gravity.y))
+            self.physicsWorld.gravity = CGVector(dx: CGFloat(9.8*gravity.x), dy: abs(CGFloat(9.8*gravity.y)))
         }
     }
     
@@ -135,7 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         spriteA.size = CGSize(width:size.width*0.1,height:size.height * 0.06)
         
-        let randNumber = random(min: CGFloat(0.1), max: CGFloat(0.9))
+        _ = random(min: CGFloat(0.1), max: CGFloat(0.9))
         spriteA.position = CGPoint(x: size.width / 2, y: size.height * 0.9)
         
         spriteA.physicsBody = SKPhysicsBody(rectangleOf:spriteA.size)
