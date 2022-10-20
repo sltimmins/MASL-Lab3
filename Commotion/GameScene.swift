@@ -13,7 +13,6 @@ import CoreMotion
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
     let defaults = UserDefaults.standard
-    
     // MARK: Raw Motion Functions
     let motion = CMMotionManager()
     func startMotionUpdates(){
@@ -53,6 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
+    var gameVCDelegate: GameViewControllerDelegate?
     var wager:Int = 0
     
     override func didMove(to view: SKView) {
@@ -249,6 +249,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.node == doubleBox || contact.bodyB.node == doubleBox {
             self.score += wager * 2
             contact.bodyB.node?.removeFromParent()
+            self.gameVCDelegate?.setShareButtonHidden(hidden: false)
         }
         if contact.bodyA.node == divThreeBox || contact.bodyB.node == divThreeBox {
             self.score += wager / 3
@@ -271,5 +272,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func random(min: CGFloat, max: CGFloat) -> CGFloat {
         return random() * (max - min) + min
+    }
+    func madeContact(){
+        
     }
 }

@@ -8,8 +8,10 @@
 
 import UIKit
 import SpriteKit
-
-class GameViewController: UIViewController {
+protocol GameViewControllerDelegate : NSObjectProtocol {
+    func setShareButtonHidden(hidden: Bool)
+}
+class GameViewController: UIViewController, GameViewControllerDelegate {
     
     let defaults = UserDefaults.standard
     
@@ -22,7 +24,7 @@ class GameViewController: UIViewController {
     var wager = 0
     
     var scene = GameScene()
-    
+//    if scene.madeContact()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,8 +40,7 @@ class GameViewController: UIViewController {
         wagerLabel.textColor = UIColor.black
         wagerLabel.text = "I want to wager " + String(Int(wagerSlider.value)) + " steps!"
         
-        wagerButton.setTitle("WAGER!", for: .normal)
-//        wagerButton.setTitle(<#T##title: String?##String?#>, for: <#T##UIControl.State#>)
+        wagerButton.setTitle("Free Drop!", for: .normal)
         
         wager = Int(wagerSlider.value)
         
@@ -51,12 +52,18 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
+        
+        scene.gameVCDelegate = self
     }
 
         
     @IBAction func sliderMove(_ sender: Any) {
         wager = Int(wagerSlider.value)
         wagerLabel.text = "I want to wager " + String(Int(wagerSlider.value)) + " steps!"
+        wagerButton.setTitle("Wager!", for: .normal)
+        if(wagerSlider.value == 0){
+            wagerButton.setTitle("Free Drop!", for: .normal)
+        }
     }
     
     @IBAction func wagerButtonPress(_ sender: Any) {
@@ -68,12 +75,16 @@ class GameViewController: UIViewController {
         
         scene.updateScene(wager)
         wager = 0
+        wagerButton.setTitle("Free Drop!", for: .normal)
+//        wagerButton.isHidden = true
+        setShareButtonHidden(hidden: true)
     }
     
     override var prefersStatusBarHidden : Bool {
         return true
     }
-    
-
-
+    func setShareButtonHidden(hidden: Bool){
+        print("in this bitch")
+        self.wagerButton.isHidden = hidden
+    }
 }
