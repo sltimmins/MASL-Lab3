@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func handleMotion(_ motionData:CMDeviceMotion?, error:Error?){
         if let gravity = motionData?.gravity {
-            self.physicsWorld.gravity = CGVector(dx: CGFloat(9.8*gravity.x), dy: -abs(CGFloat(9.8*gravity.y)))
+            self.physicsWorld.gravity = CGVector(dx: CGFloat(9.8*gravity.x), dy: -5.0)
         }
     }
     
