@@ -38,9 +38,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let halfBox = SKSpriteNode()
     let tripleBox = SKSpriteNode()
     let divThreeBox = SKSpriteNode()
-    let ptOneBox = SKSpriteNode()
     
     let scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+    
+    let doubleBoxLabel = SKLabelNode(fontNamed: "Chalkduster")
+    let halfBoxLabel = SKLabelNode(fontNamed: "Chalkduster")
+    let tripleBoxLabel = SKLabelNode(fontNamed: "Chalkduster")
+    let divThreeBoxLabel = SKLabelNode(fontNamed: "Chalkduster")
+
     var score:Int = 0 {
         willSet(newValue){
             DispatchQueue.main.async{
@@ -98,6 +103,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //SET SCORE TO STEPS
         self.score = 0
+                
+        doubleBoxLabel.text = "x2"
+        doubleBoxLabel.fontSize = 20
+        doubleBoxLabel.fontColor = SKColor.blue
+        doubleBoxLabel.position = CGPoint(x: frame.minX + 55, y: frame.minY + 40)
+        
+        divThreeBoxLabel.text = "1/3"
+        divThreeBoxLabel.fontSize = 20
+        divThreeBoxLabel.fontColor = SKColor.blue
+        divThreeBoxLabel.position = CGPoint(x: frame.minX + 150, y: frame.minY + 40)
+        
+        halfBoxLabel.text = "1/2"
+        halfBoxLabel.fontSize = 20
+        halfBoxLabel.fontColor = SKColor.blue
+        halfBoxLabel.position = CGPoint(x: frame.maxX - 55, y: frame.minY + 40)
+        
+        tripleBoxLabel.text = "x3"
+        tripleBoxLabel.fontSize = 20
+        tripleBoxLabel.fontColor = SKColor.blue
+        tripleBoxLabel.position = CGPoint(x: frame.maxX - 150, y: frame.minY + 40)
+        
+        addChild(doubleBoxLabel)
+        addChild(divThreeBoxLabel)
+        addChild(halfBoxLabel)
+        addChild(tripleBoxLabel)
     }
     
     func updateScene(_ wager:Int){
