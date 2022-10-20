@@ -167,16 +167,19 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ak-n2-iBV">
-                                <rect key="frame" x="140" y="149" width="112" height="32"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPk-Ov-5nY">
+                                <rect key="frame" x="123" y="149" width="146" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="3ak-n2-iBV" secondAttribute="height" multiplier="7:2" id="Bs8-sW-TWf"/>
-                                    <constraint firstAttribute="width" constant="112" id="uBG-38-zHk"/>
+                                    <constraint firstAttribute="height" constant="35" id="FSr-t9-ORv"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="146" id="PcN-Oq-QoK"/>
+                                    <constraint firstAttribute="width" secondItem="hPk-Ov-5nY" secondAttribute="height" multiplier="146:35" id="Yt0-Gx-IT0"/>
+                                    <constraint firstAttribute="width" constant="146" id="hf8-05-uMt"/>
+                                    <constraint firstAttribute="width" secondItem="hPk-Ov-5nY" secondAttribute="height" multiplier="146:35" id="j67-c2-SMh"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Button"/>
                                 <connections>
-                                    <action selector="wagerButtonPress:" destination="uAs-2Q-GOu" eventType="touchUpInside" id="ppV-ab-xaL"/>
+                                    <action selector="wagerButtonPress:" destination="uAs-2Q-GOu" eventType="touchUpInside" id="Kft-Mq-JHG"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -185,25 +188,25 @@
                             <constraint firstItem="9ra-ia-fff" firstAttribute="top" secondItem="hUm-QL-LLJ" secondAttribute="bottom" constant="608" id="6ny-OI-Ydq"/>
                             <constraint firstItem="F51-KG-XP8" firstAttribute="top" secondItem="Mv4-4J-m7v" secondAttribute="bottom" constant="83" id="BLc-ix-P9v"/>
                             <constraint firstAttribute="trailing" secondItem="F51-KG-XP8" secondAttribute="trailing" constant="16" id="Dsg-eT-kwc"/>
+                            <constraint firstItem="hPk-Ov-5nY" firstAttribute="top" secondItem="Mv4-4J-m7v" secondAttribute="bottom" constant="149" id="J6E-c1-EMl"/>
+                            <constraint firstItem="hPk-Ov-5nY" firstAttribute="leading" secondItem="9m8-Lp-cfY" secondAttribute="leading" constant="123" id="Jtz-Ph-yne"/>
                             <constraint firstItem="9ra-ia-fff" firstAttribute="top" secondItem="F51-KG-XP8" secondAttribute="bottom" constant="645" id="Msn-iv-b18"/>
                             <constraint firstItem="F51-KG-XP8" firstAttribute="leading" secondItem="9m8-Lp-cfY" secondAttribute="leading" constant="16" id="QJK-dZ-v3P"/>
                             <constraint firstItem="hUm-QL-LLJ" firstAttribute="leading" secondItem="9m8-Lp-cfY" secondAttribute="leading" constant="37" id="Tph-Vo-kat"/>
+                            <constraint firstAttribute="trailing" secondItem="hPk-Ov-5nY" secondAttribute="trailing" constant="124" id="dzF-wi-Hiy"/>
                             <constraint firstAttribute="trailing" secondItem="Pre-BL-1Tj" secondAttribute="trailing" constant="16" id="fTz-vz-1Um"/>
                             <constraint firstItem="Pre-BL-1Tj" firstAttribute="leading" secondItem="9m8-Lp-cfY" secondAttribute="leading" constant="16" id="gFa-Vl-TE1"/>
-                            <constraint firstItem="9ra-ia-fff" firstAttribute="top" secondItem="3ak-n2-iBV" secondAttribute="bottom" constant="568" id="gyb-fn-x2n"/>
                             <constraint firstItem="hUm-QL-LLJ" firstAttribute="top" secondItem="Mv4-4J-m7v" secondAttribute="bottom" constant="111" id="oOU-ZH-dXC"/>
                             <constraint firstItem="9ra-ia-fff" firstAttribute="top" secondItem="Pre-BL-1Tj" secondAttribute="bottom" constant="692" id="otu-5V-94q"/>
                             <constraint firstAttribute="trailing" secondItem="hUm-QL-LLJ" secondAttribute="trailing" constant="38" id="qd5-VU-naV"/>
-                            <constraint firstItem="3ak-n2-iBV" firstAttribute="leading" secondItem="9m8-Lp-cfY" secondAttribute="leading" constant="140" id="u6N-7c-4II"/>
                             <constraint firstItem="Pre-BL-1Tj" firstAttribute="top" secondItem="Mv4-4J-m7v" secondAttribute="bottom" constant="36" id="v3O-2R-GI1"/>
-                            <constraint firstAttribute="trailing" secondItem="3ak-n2-iBV" secondAttribute="trailing" constant="141" id="vJw-rd-1rF"/>
-                            <constraint firstItem="3ak-n2-iBV" firstAttribute="top" secondItem="Mv4-4J-m7v" secondAttribute="bottom" constant="149" id="zLp-Ce-ZAl"/>
+                            <constraint firstItem="9ra-ia-fff" firstAttribute="top" secondItem="hPk-Ov-5nY" secondAttribute="bottom" constant="565" id="xDR-m0-0ef"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dJ4-QB-iQU"/>
                     <connections>
                         <outlet property="stepsLabel" destination="Pre-BL-1Tj" id="vgV-4d-Zh1"/>
-                        <outlet property="wagerButton" destination="3ak-n2-iBV" id="Ght-99-AGs"/>
+                        <outlet property="wagerButton" destination="hPk-Ov-5nY" id="BTe-xb-v13"/>
                         <outlet property="wagerLabel" destination="F51-KG-XP8" id="2C0-s3-2HX"/>
                         <outlet property="wagerSlider" destination="hUm-QL-LLJ" id="Jat-np-JUx"/>
                     </connections>

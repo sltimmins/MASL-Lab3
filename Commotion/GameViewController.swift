@@ -39,6 +39,7 @@ class GameViewController: UIViewController {
         wagerLabel.text = "I want to wager " + String(Int(wagerSlider.value)) + " steps!"
         
         wagerButton.setTitle("WAGER!", for: .normal)
+//        wagerButton.setTitle(<#T##title: String?##String?#>, for: <#T##UIControl.State#>)
         
         wager = Int(wagerSlider.value)
         
