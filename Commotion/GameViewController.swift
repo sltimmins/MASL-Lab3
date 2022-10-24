@@ -13,6 +13,7 @@ protocol GameViewControllerDelegate : NSObjectProtocol {
 }
 class GameViewController: UIViewController, GameViewControllerDelegate {
     
+    //set up some references and variables
     let defaults = UserDefaults.standard
     
     @IBOutlet weak var stepsLabel: UILabel!
@@ -24,7 +25,7 @@ class GameViewController: UIViewController, GameViewControllerDelegate {
     var wager = 0
     
     var scene = GameScene()
-//    if scene.madeContact()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

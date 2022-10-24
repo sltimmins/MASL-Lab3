@@ -68,6 +68,7 @@ class ViewController: UIViewController {
             repeats: true)
     }
     
+    //chaning the step goal for the current day
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         self.stepGoal.text = String("Step Goal: " + String(Int(sender.value)))
         self.goal = Double(sender.value)
@@ -75,6 +76,7 @@ class ViewController: UIViewController {
     }
     
     @objc
+    //setting up the current and previous days
     func dates(){
         let midnight = calendar.startOfDay(for: Date())
         let yesterday = calendar.date(byAdding: .day, value: -1, to: midnight)
@@ -95,6 +97,7 @@ class ViewController: UIViewController {
             remaining = 0
         }
         
+        //setting the progress wheel for the current days steps out of the customly set goal
         CircularProgress.setprogress(Double(stepsToday) / goal, UIColor.systemBlue, String(remaining), "Steps Remaining")
         
         if(Double(stepsToday) >= self.goal) {
@@ -116,6 +119,7 @@ class ViewController: UIViewController {
         }
     }
     
+    //handling motion
     func handleMotion(_ motionData:CMDeviceMotion?, error:Error?){
         if let gravity = motionData?.gravity {
             let rotation = atan2(gravity.x, gravity.y) - Double.pi
@@ -133,6 +137,7 @@ class ViewController: UIViewController {
         
     }
     
+    //handling activity
     func handleActivity(_ activity:CMMotionActivity?)->Void{
         // unwrap the activity and disp
         if let unwrappedActivity = activity {
